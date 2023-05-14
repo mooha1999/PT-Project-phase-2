@@ -23,6 +23,7 @@ void AddLadderAction::ReadActionParameters()
 
 	pOut->PrintMessage("New Ladder: Click on its Start Cell ...");
 	startPos = pIn->GetCellClicked();
+	pOut->PrintMessage("New Ladder: Click on its End Cell ...");
 	endPos = pIn->GetCellClicked();
 	if (!startPos.IsValidCell())
 	{
@@ -30,7 +31,6 @@ void AddLadderAction::ReadActionParameters()
 		flag = 1;
 		return;
 	}
-
 
 	pOut->PrintMessage("New Ladder: Click on its End Cell ...");
 
@@ -42,7 +42,6 @@ void AddLadderAction::ReadActionParameters()
 	}
 	if (startPos.HCell() == 0 && startPos.VCell() == 8)
 	{
-
 		pGrid->PrintErrorMessage("start cell cannot be the first cell, Click to continue ...");
 		flag = 1;
 		return;
@@ -54,7 +53,6 @@ void AddLadderAction::ReadActionParameters()
 		pGrid->PrintErrorMessage("end cell cannot be the last cell, CLick to continue ...");
 		return;
 	}
-
 
 	if (startPos.GetCellNum() == endPos.GetCellNum())
 	{
@@ -76,28 +74,26 @@ void AddLadderAction::ReadActionParameters()
 		return;
 	}
 
-	GameObject* Lad = new Ladder(startPos, endPos);
+	//TODO Validate overlapping
+	/*GameObject* Lad = new Ladder(startPos, endPos);
 	if (Lad->IsOverlapping(Lad))
 	{
 		pGrid->PrintErrorMessage("Two ladders cannot overlap");
 		flag = 1;
 		return;
-	}
-
+	}*/
 
 	// Clear messages
 	pOut->ClearStatusBar();
 }
 
-
 // Execute the action
 void AddLadderAction::Execute()
 {
-
 	ReadActionParameters();
 
 	// Create a Ladder object with the parameters read from the user
-	Ladder* pLadder = new Ladder(startPos, endPos);
+	//Ladder* pLadder = new Ladder(startPos, endPos);
 
 	Grid* pGrid = pManager->GetGrid();
 	if (flag) {
@@ -114,7 +110,3 @@ void AddLadderAction::Execute()
 		}
 	}
 }
-
-
-
-

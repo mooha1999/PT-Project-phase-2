@@ -9,12 +9,11 @@ snake::snake(const CellPosition& startCellPos, const CellPosition& endCellPos) :
 	if (endCellPos.IsValidCell()) {
 		this->endCellPos = endCellPos;
 	}
-
 }
 
 void snake::Draw(Output* pOut) const
 {
-	pOut->DrawLadder(position, endCellPos);
+	pOut->DrawSnake(position, endCellPos);
 }
 
 void snake::Apply(Grid* pGrid, Player* pPlayer)
@@ -24,10 +23,7 @@ void snake::Apply(Grid* pGrid, Player* pPlayer)
 	// 2- Apply the snake's effect by moving the player to the endCellPos
 
 	pGrid->UpdatePlayerCell(pPlayer, endCellPos);
-
 }
-
-
 
 bool snake::IsOverLapping(GameObject* newObj) const
 {
@@ -42,7 +38,6 @@ bool snake::IsOverLapping(GameObject* newObj) const
 	return false;
 }
 
-
 CellPosition snake::GetEndPosition() const
 {
 	return endCellPos;
@@ -55,7 +50,6 @@ void snake::Save(ofstream& OutFile)
 void snake::Load(ifstream& Infile)
 {
 }
-
 
 snake::~snake()
 {
