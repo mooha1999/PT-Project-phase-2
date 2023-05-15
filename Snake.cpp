@@ -1,5 +1,5 @@
 #include "snake.h"
-
+#include "Player.h"
 snake::snake(const CellPosition& startCellPos, const CellPosition& endCellPos) : GameObject(startCellPos)
 {
 	if (startCellPos.IsValidCell()) {
@@ -23,6 +23,11 @@ void snake::Apply(Grid* pGrid, Player* pPlayer)
 	// 2- Apply the snake's effect by moving the player to the endCellPos
 
 	pGrid->UpdatePlayerCell(pPlayer, endCellPos);
+
+	if (pPlayer->GetCell()->GetGameObject())
+	{
+		pPlayer->GetCell()->GetGameObject()->Apply(pGrid, pPlayer);
+	}
 }
 
 bool snake::IsOverLapping(GameObject* newObj) const

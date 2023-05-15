@@ -169,18 +169,10 @@ void Player::Move(Grid* pGrid, int diceNumber)
 			//    the importance of this function is that it Updates the pCell pointer of the player and Draws it in the new position
 			pGrid->UpdatePlayerCell(this, currentPos);
 			// 6- Apply() the game object of the reached cell (if any)
-
-			if (this->GetCell()->HasCard()) {
-				Card* card = this->GetCell()->HasCard();
-				card->Apply(pGrid, this);
-			}
-			else if (this->GetCell()->HasLadder()) {
-				Ladder* ladder = this->GetCell()->HasLadder();
-				ladder->Apply(pGrid, this);
-			}
-			else if (this->GetCell()->HasSnake()) {
-				snake* snake = this->GetCell()->HasSnake();
-				snake->Apply(pGrid, this);
+			GameObject* currentGameObject = GetCell()->GetGameObject();
+			if (currentGameObject)
+			{
+				currentGameObject->Apply(pGrid, this);
 			}
 			// 7- Check if the player reached the end cell of the whole game, and if yes, Set end game with true: pGrid->SetEndGame(true)
 			int currenCellNum = currentPos.GetCellNum();
