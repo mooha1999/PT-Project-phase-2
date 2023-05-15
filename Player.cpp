@@ -37,7 +37,6 @@ int Player::getjustrolleddicenumber() const {
 	return justRolledDiceNum;
 }
 
-
 void Player::SetCell(Cell* cell)
 {
 	pCell = cell;
@@ -102,7 +101,6 @@ void Player::Draw(Output* pOut) const
 {
 	color playerColor = UI.PlayerColors[playerNum];
 
-
 	///TODO: use the appropriate output function to draw the player with "playerColor"
 	pOut->DrawPlayer(pCell->GetCellPosition(), playerNum, playerColor);
 }
@@ -110,7 +108,6 @@ void Player::Draw(Output* pOut) const
 void Player::ClearDrawing(Output* pOut) const
 {
 	color cellColor = pCell->HasCard() ? UI.CellColor_HasCard : UI.CellColor_NoCard;
-
 
 	///TODO: use the appropriate output function to draw the player with "cellColor" (to clear it)
 	pOut->DrawPlayer(pCell->GetCellPosition(), playerNum, cellColor);
@@ -124,7 +121,6 @@ void Player::Move(Grid* pGrid, int diceNumber)
 	Input* pin = pGrid->GetInput();
 	Output* pout = pGrid->GetOutput();
 	if (!end) {
-		
 		if (pGrid->GetEndGame()) {
 			pOut->PrintMessage("Congratulations P" + to_string(playerNum) + " You Win!");
 			int x, y;
@@ -141,24 +137,21 @@ void Player::Move(Grid* pGrid, int diceNumber)
 			setcard4affect(0);
 			return;
 		}
-		if (getmoveability() == 1) {
+		if (getmoveability()) {
 			///TODO: Implement this function as mentioned in the guideline steps (numbered below) below
 
-
 			// == Here are some guideline steps (numbered below) to implement this function ==
-
 
 			// 1- Increment the turnCount because calling Move() means that the player has rolled the dice once
 			turnCount++;
 			// 2- Check the turnCount to know if the wallet recharge turn comes (recharge wallet instead of move)
 			//    If yes, recharge wallet and reset the turnCount and return from the function (do NOT move)
-			if (turnCount == 4) {
+			if (turnCount == 4) {//TODO Change it to 3
 				int x, y;
 				pin->GetPointClicked(x, y);
 				pOut->ClearStatusBar();
 				SetWallet(GetWallet() + (diceNumber * 10));
 				turnCount = 0;
-
 			}
 			if (GetWallet() == 0) {
 				turnCount++;
@@ -190,15 +183,11 @@ void Player::Move(Grid* pGrid, int diceNumber)
 			// 7- Check if the player reached the end cell of the whole game, and if yes, Set end game with true: pGrid->SetEndGame(true)
 			int currenCellNum = currentPos.GetCellNum();
 			if (currenCellNum == 99) {
-
 				pGrid->SetEndGame(true);
-
 			}
 		}
-		
 	}
 }
-
 
 void Player::AppendPlayerInfo(string& playersInfo) const
 {
@@ -206,4 +195,3 @@ void Player::AppendPlayerInfo(string& playersInfo) const
 	playersInfo += to_string(wallet) + ", ";
 	playersInfo += to_string(turnCount) + ")";
 }
-
