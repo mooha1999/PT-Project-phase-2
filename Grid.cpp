@@ -5,7 +5,7 @@
 #include "Ladder.h"
 #include "Snake.h" //
 #include "Card.h"
-#include "Snake.h"	
+#include "Snake.h"
 #include "CardOne.h"	//
 #include "CardTwo.h"	//
 #include "CardThree.h"	//
@@ -16,9 +16,6 @@
 #include "Player.h"
 #include <iostream>		//
 #include <fstream>		//
-
-
-
 
 Grid::Grid(Input* pIn, Output* pOut) : pIn(pIn), pOut(pOut) // Initializing pIn, pOut
 {
@@ -48,9 +45,7 @@ Grid::Grid(Input* pIn, Output* pOut) : pIn(pIn), pOut(pOut) // Initializing pIn,
 	endGame = false;
 }
 
-
 // ========= Adding or Removing GameObjects to Cells =========
-
 
 bool Grid::AddObjectToCell(GameObject* pNewObject)  // think if any validation is needed
 {
@@ -70,14 +65,13 @@ bool Grid::AddObjectToCell(GameObject* pNewObject)  // think if any validation i
 	return false; // if not a valid position
 }
 
-
 // Note: You may need to change the return type of this function (Think)
 void Grid::RemoveObjectFromCell(const CellPosition& pos)
 {
 	if (pos.IsValidCell()) // Check if valid position
 	{
 		// Note: you can deallocate the object here before setting the pointer to null if it is needed
-		delete CellList[pos.VCell()][pos.HCell()]->GetGameObject(); //
+		//delete CellList[pos.VCell()][pos.HCell()]->GetGameObject(); //
 		CellList[pos.VCell()][pos.HCell()]->SetGameObject(NULL);
 	}
 }
@@ -95,9 +89,7 @@ void Grid::UpdatePlayerCell(Player* player, const CellPosition& newPosition)
 	player->Draw(pOut);
 }
 
-
 // ========= Setters and Getters Functions =========
-
 
 Input* Grid::GetInput() const
 {
@@ -134,7 +126,6 @@ void Grid::AdvanceCurrentPlayer()
 {
 	currPlayerNumber = (currPlayerNumber + 1) % MaxPlayerCount; // this generates value from 0 to MaxPlayerCount - 1
 }
-
 
 //=================================================================================================
 	// NEW ADDED functions
@@ -195,7 +186,7 @@ Cell* Grid::GetCellFromPosition(CellPosition cPos) //
 void Grid::SaveAll(ofstream& OutFile, GObjectsTypes Type) //
 {
 	if (Type == LADDER_TYPE) {
-		// Count All Laders in the grid	
+		// Count All Laders in the grid
 		int Laddercount = 0;
 		for (int i = NumVerticalCells - 1; i >= 0; i--)
 		{
@@ -205,9 +196,9 @@ void Grid::SaveAll(ofstream& OutFile, GObjectsTypes Type) //
 					Laddercount++;
 			}
 		}
-		// Writes the ladders total in the file	
+		// Writes the ladders total in the file
 		OutFile << to_string(Laddercount);
-		// Loops through all ladders and save its data	
+		// Loops through all ladders and save its data
 		for (int i = NumVerticalCells - 1; i >= 0; i--)
 		{
 			for (int j = 0; j < NumHorizontalCells; j++)
@@ -337,7 +328,6 @@ void Grid::LoadAll(ifstream& inFile, GObjectsTypes Type, int ObjectsCount) //
 			case 7:
 				newCard = new CardSeven(CellList[0][0]->GetCellPosition());
 				break;
-
 			}
 			if (newCard)
 			{
@@ -391,8 +381,6 @@ snake* Grid::GetNextSnake(const CellPosition& position) ///
 			snake* pSnake = CellList[i][j]->HasSnake();
 			if (pSnake != NULL)
 				return pSnake;
-
-
 		}
 		startH = 0; // because in the next above rows, we will search from the first left cell (hCell = 0) to the right
 	}
@@ -414,13 +402,9 @@ Card* Grid::CurrentCellCard(const CellPosition& position) ///
 	}
 }
 
-
-
-
 //=================================================================================================
 
 // ========= Other Getters =========
-
 
 Player* Grid::GetCurrentPlayer() const
 {
@@ -429,7 +413,6 @@ Player* Grid::GetCurrentPlayer() const
 
 Ladder* Grid::GetNextLadder(const CellPosition& position)///
 {
-
 	int startH = position.HCell(); // represents the start hCell in the current row to search for the ladder in
 	for (int i = position.VCell(); i >= 0; i--) // searching from position.vCell and ABOVE
 	{
@@ -440,23 +423,19 @@ Ladder* Grid::GetNextLadder(const CellPosition& position)///
 			Ladder* pladder = CellList[i][j]->HasLadder();
 			if (pladder != NULL)
 				return pladder;
-
-
 		}
 		startH = 0; // because in the next above rows, we will search from the first left cell (hCell = 0) to the right
 	}
 	return NULL; // not found
 }
 
-
 // ========= User Interface Functions =========
-
 
 void Grid::UpdateInterface() const
 {
 	if (UI.InterfaceMode == MODE_DESIGN)
 	{
-		// 1- Draw cells with or without cards 
+		// 1- Draw cells with or without cards
 		for (int i = NumVerticalCells - 1; i >= 0; i--) // bottom up
 		{
 			for (int j = 0; j < NumHorizontalCells; j++) // left to right
@@ -507,7 +486,6 @@ void Grid::PrintErrorMessage(string msg)
 	pIn->GetPointClicked(x, y);
 	pOut->ClearStatusBar();
 }
-
 
 Grid::~Grid()
 {
