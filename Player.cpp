@@ -12,7 +12,7 @@ Player::Player(Cell* pCell, int playerNum) : stepCount(0), wallet(100), playerNu
 {
 	this->pCell = pCell;
 	this->turnCount = 0;
-
+	ExtraRollDiceCon = 0;
 	// Make all the needed initialization or validations
 }
 
@@ -182,7 +182,7 @@ void Player::Move(Grid* pGrid, int diceNumber)
 			}
 			// 7- Check if the player reached the end cell of the whole game, and if yes, Set end game with true: pGrid->SetEndGame(true)
 			int currenCellNum = currentPos.GetCellNum();
-			if (currenCellNum == 99) {
+			if (currenCellNum >= 99) {
 				pGrid->SetEndGame(true);
 			}
 		}
