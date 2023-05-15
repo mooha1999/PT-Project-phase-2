@@ -129,12 +129,13 @@ void Player::Move(Grid* pGrid, int diceNumber)
 			end = true;
 			return;
 		}
-		if (getcard4affect() == 1) {
+		if (getcard4affect()) {
 			pOut->PrintMessage("P" + to_string(playerNum) + "You Will Be Prevented from Moving this Round!  Click to Continue...");
 			int x, y;
 			pin->GetPointClicked(x, y);
 			pOut->ClearStatusBar();
-			setcard4affect(0);
+			setcard4affect(false);
+			turnCount++;
 			return;
 		}
 		if (getmoveability()) {
@@ -146,7 +147,7 @@ void Player::Move(Grid* pGrid, int diceNumber)
 			turnCount++;
 			// 2- Check the turnCount to know if the wallet recharge turn comes (recharge wallet instead of move)
 			//    If yes, recharge wallet and reset the turnCount and return from the function (do NOT move)
-			if (turnCount == 3) {
+			if (turnCount >= 3) {
 				/*int x, y;
 				pin->GetPointClicked(x, y);
 				pOut->ClearStatusBar();*/
