@@ -7,23 +7,18 @@
 #include <time.h> // used to in srand to generate random numbers with different seed
 #include "GameObject.h"
 
-
 RollDiceAction::RollDiceAction(ApplicationManager* pApp) : Action(pApp)
 {
-
 }
 
 void RollDiceAction::ReadActionParameters()
 {
 	// no parameters to read from user
-
 }
 
 void RollDiceAction::Execute()
 {
-
 	///TODO: Implement this function as mentioned in the guideline steps (numbered below) below
-
 
 	// == Here are some guideline steps (numbered below) to implement this function ==
 
@@ -32,10 +27,8 @@ void RollDiceAction::Execute()
 	if (pManager->GetGrid()->GetEndGame())
 	{
 		pManager->GetGrid()->GetOutput()->PrintMessage("Game Ended");
-	}
-	else
 		return;
-
+	}
 
 	// -- If not ended, do the following --:
 
@@ -45,7 +38,6 @@ void RollDiceAction::Execute()
 
 	// 3- Get the "current" player from pGrid
 
-
 	Grid* pGrid = pManager->GetGrid();
 
 	Player* pPlayer = pGrid->GetCurrentPlayer();
@@ -54,17 +46,13 @@ void RollDiceAction::Execute()
 
 	pPlayer->Move(pGrid, diceNumber);
 
-
-
 	// 5- Advance the current player number of pGrid
 
 	pGrid->AdvanceCurrentPlayer();
 
 	// NOTE: the above guidelines are the main ones but not a complete set (You may need to add more steps).
-
 }
 
 RollDiceAction::~RollDiceAction()
 {
-
 }
