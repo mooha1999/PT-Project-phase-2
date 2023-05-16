@@ -1,5 +1,5 @@
 #include "SaveGridAction.h"
-#include "Grid.h"		
+#include "Grid.h"
 #include <fstream>
 
 SaveGridAction::SaveGridAction(ApplicationManager* pApp) : Action(pApp)
@@ -8,7 +8,6 @@ SaveGridAction::SaveGridAction(ApplicationManager* pApp) : Action(pApp)
 
 void SaveGridAction::ReadActionParameters()
 {
-
 	Grid* pGrid = pManager->GetGrid();
 	Input* pIn = pGrid->GetInput();
 	Output* pOut = pGrid->GetOutput();
@@ -23,20 +22,20 @@ void SaveGridAction::Execute()
 	Input* pIn = pGrid->GetInput();
 	Output* pOut = pGrid->GetOutput();
 	ReadActionParameters();
-	ofstream myfile;
-	filename = pIn->GetSrting(pOut);
-	myfile.open(filename.c_str());
-	if (myfile.is_open() == false)
+	try
 	{
-		ofstream data(filename.c_str());
+		ofstream myfile(filename);
+		pGrid->SaveAll(myfile, LADDER_TYPE);
+		pGrid->SaveAll(myfile, SNAKE_TYPE);
+		pGrid->SaveAll(myfile, CARD_TYPE);
+		myfile.close();
+		pOut->PrintMessage("Grid Data Saved Successfully");
+	}
+	catch (const std::exception&)
+	{
+		pOut->PrintMessage("Could not open file \"" + filename + "\"");
 	}
 	//pGrid->calcnumberofobjects();
-	pGrid->SaveAll(myfile, LADDER_TYPE);
-	pGrid->SaveAll(myfile, LADDER_TYPE);
-	pGrid->SaveAll(myfile, LADDER_TYPE);
-	myfile.close();
-	pOut->PrintMessage("Grid Data Saved Successfully");
-
 }
 
 SaveGridAction::~SaveGridAction()

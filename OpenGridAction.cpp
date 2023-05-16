@@ -1,6 +1,6 @@
 #include "OpenGridAction.h"
-#include "Grid.h"	
-#include <fstream>	
+#include "Grid.h"
+#include <fstream>
 OpenGridAction::OpenGridAction(ApplicationManager* pApp) : Action(pApp)
 {
 }
@@ -10,58 +10,42 @@ void OpenGridAction::ReadActionParameters()
 	Grid* pGrid = pManager->GetGrid();
 	Input* pIn = pGrid->GetInput();
 	Output* pOut = pGrid->GetOutput();
-	pOut->PrintMessage("Enter the fileName you would like to save to (i.e : \"test.txt\")");
+	pOut->PrintMessage("Enter the fileName you would like to load from(i.e : \"test.txt\")");
 	filename = pIn->GetSrting(pOut);
 	pOut->ClearStatusBar();
 }
 
 void OpenGridAction::Execute()
 {
-	Action* pAct = NULL;
 	Grid* pGrid = pManager->GetGrid();
 	Input* pIn = pGrid->GetInput();
 	Output* pOut = pGrid->GetOutput();
 	ReadActionParameters();
-	ifstream myfile;
 	try {
-		myfile.open(filename);
-		// Loading Ladders	
-		string StringNumber = "";
-		char inChar = myfile.get();
-		while (inChar != '\n' && inChar != ' ' && !myfile.eof()) {
-			StringNumber += inChar;
-			inChar = myfile.get();
-		}
-		int LaddersCount = stoi(StringNumber);
-		pGrid->PrintErrorMessage("You Have " + StringNumber + " Ladders");
+		ifstream myfile(filename);
+		// Loading Ladders
+		int LaddersCount;
+		myfile >> LaddersCount;
+		pGrid->PrintErrorMessage("You Have " + to_string(LaddersCount) + " Ladders");
 		pGrid->LoadAll(myfile, LADDER_TYPE, LaddersCount);
-		// Loading Snakes	
-		StringNumber = "";
-		inChar = myfile.get();
-		while (inChar != '\n' && inChar != ' ' && !myfile.eof()) {
-			StringNumber += inChar;
-			inChar = myfile.get();
-		}
-		int SnakesCount = stoi(StringNumber);
-		pGrid->PrintErrorMessage("You Have " + StringNumber + " Snakes");
+		// Loading Snakes
+		int SnakesCount;
+		myfile >> SnakesCount;
+		pGrid->PrintErrorMessage("You Have " + to_string(SnakesCount) + " Snakes");
 		pGrid->LoadAll(myfile, SNAKE_TYPE, SnakesCount);
-		// Loading Cards	
-		StringNumber = "";
-		inChar = myfile.get();
-		while (inChar != '\n' && inChar != ' ' && !myfile.eof()) {
-			StringNumber += inChar;
-			inChar = myfile.get();
-		}
-		int CardsCount = stoi(StringNumber);
-		pGrid->PrintErrorMessage("You Have " + StringNumber + " Cards");
+		// Loading Cards
+		int CardsCount;
+		myfile >> CardsCount;
+		pGrid->PrintErrorMessage("You Have " + to_string(CardsCount) + " Cards");
 		pGrid->LoadAll(myfile, CARD_TYPE, CardsCount);
+		// Remaining operations
 		pGrid->UpdateInterface();
+		pGrid->PrintErrorMessage("Loaded Successfully (click to continue ...)");
+		myfile.close();
 	}
 	catch (exception e) {
 		pGrid->PrintErrorMessage("Failed to load to the file check the name (click to continue ...)");
 	}
-	pGrid->PrintErrorMessage("Loaded Successfully (click to continue ...)");
-	myfile.close();
 }
 
 OpenGridAction::~OpenGridAction()

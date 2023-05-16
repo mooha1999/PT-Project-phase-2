@@ -25,6 +25,11 @@ void CardSeven::Apply(Grid* pGrid, Player* pPlayer)
 	}
 }
 
+void CardSeven::Load(ifstream& Infile)
+{
+	Card::Load(Infile);
+}
+
 CardSeven::~CardSeven()
 {
 }

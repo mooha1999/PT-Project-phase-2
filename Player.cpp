@@ -138,6 +138,7 @@ void Player::Move(Grid* pGrid, int diceNumber)
 			turnCount++;
 			return;
 		}
+
 		if (getmoveability()) {
 			///TODO: Implement this function as mentioned in the guideline steps (numbered below) below
 
@@ -165,6 +166,10 @@ void Player::Move(Grid* pGrid, int diceNumber)
 			//    Using the appropriate function of CellPosition class to update "pos"
 			CellPosition currentPos = pCell->GetCellPosition();
 			currentPos.AddCellNum(justRolledDiceNum);
+			if (currentPos.HCell() == -1 && currentPos.VCell() == -1) {
+				currentPos.SetHCell(10);
+				currentPos.SetVCell(0);
+			}
 			// 5- Use pGrid->UpdatePlayerCell() func to Update player's cell POINTER (pCell) with the cell in the passed position, "pos" (the updated one)
 			//    the importance of this function is that it Updates the pCell pointer of the player and Draws it in the new position
 			pGrid->UpdatePlayerCell(this, currentPos);

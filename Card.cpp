@@ -1,6 +1,5 @@
 #include "Card.h"
 
-
 Card::Card(const CellPosition& pos) : GameObject(pos) // sets the cell position of the GameObject
 {
 }
@@ -17,7 +16,6 @@ int Card::GetCardNumber()
 
 void Card::Draw(Output* pOut) const
 {
-
 	pOut->DrawCell(position, cardNumber);
 }
 
@@ -47,17 +45,12 @@ void Card::Save(ofstream& OutFile)
 {
 	OutFile << "\n" + to_string(cardNumber) + " " + to_string(position.GetCellNum());
 }
+
 void Card::Load(ifstream& Infile)
 {
-	string StringNumber = "";
-	char inChar = Infile.get();
-	while (inChar != '\n' && inChar != ' ' && !Infile.eof()) {
-		StringNumber += inChar;
-		inChar = Infile.get();
-	}
-	int startCell = stoi(StringNumber);
-	CellPosition newStartCellPosition(startCell);
-	position = newStartCellPosition;
+	int startCell;
+	Infile >> startCell;
+	position = CellPosition(startCell);
 }
 
 Card::~Card()

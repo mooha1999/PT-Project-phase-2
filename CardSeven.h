@@ -7,6 +7,6 @@ public:
 	CardSeven(const CellPosition& pos);
 
 	virtual void Apply(Grid* pGrid, Player* pPlayer);
+	virtual void Load(ifstream& Infile);
 	virtual ~CardSeven();
-
 };

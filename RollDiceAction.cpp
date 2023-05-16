@@ -45,10 +45,14 @@ void RollDiceAction::Execute()
 	// 4- Move the currentPlayer using function Move of class player
 
 	pPlayer->Move(pGrid, diceNumber);
+	// Check if the player has an extra turn
+	if (pPlayer->getExtraRollDiceCon() == 0)
+		pGrid->AdvanceCurrentPlayer();
+	else {// 5- Advance the current player number of pGrid
+		pPlayer->SetExtraRollDiceCon(0);
+	}
 
-	// 5- Advance the current player number of pGrid
-
-	pGrid->AdvanceCurrentPlayer();
+	//pGrid->AdvanceCurrentPlayer();
 
 	// NOTE: the above guidelines are the main ones but not a complete set (You may need to add more steps).
 }

@@ -27,4 +27,3 @@ public:
 	virtual void Load(ifstream& Infile);
 	virtual ~Card(); // A Virtual Destructor
 };
-

@@ -58,6 +58,10 @@ void Ladder::Save(ofstream& OutFile)
 
 void Ladder::Load(ifstream& Infile)
 {
+	int start, end;
+	Infile >> start >> end;
+	position = CellPosition(start);
+	endCellPos = CellPosition(end);
 }
 
 Ladder::~Ladder()

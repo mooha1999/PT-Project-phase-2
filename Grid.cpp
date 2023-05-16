@@ -297,13 +297,8 @@ void Grid::LoadAll(ifstream& inFile, GObjectsTypes Type, int ObjectsCount) //
 		}
 		for (int j = 0; j < ObjectsCount; j++)
 		{
-			string StringNumber = "";
-			char inChar = inFile.get();
-			while (inChar != '\n' && inChar != ' ' && !inFile.eof()) {
-				StringNumber += inChar;
-				inChar = inFile.get();
-			}
-			int cardNumber = stoi(StringNumber);
+			int cardNumber;
+			inFile >> cardNumber;
 			GameObject* newCard = nullptr;
 			switch (cardNumber)
 			{

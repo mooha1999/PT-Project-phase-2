@@ -20,8 +20,6 @@ void CardFive::Apply(Grid* pGrid, Player* pPlayer)
 }
 CardFive::~CardFive() {
 }
-void CardFive::load(ifstream& Infile) {
-	{
-		Infile >> cardNumber;
-	}
+void CardFive::Load(ifstream& Infile) {
+	Card::Load(Infile);
 }

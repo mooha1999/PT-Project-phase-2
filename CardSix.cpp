@@ -5,7 +5,6 @@
 CardSix::CardSix(const CellPosition& pos) : Card(pos)
 {
 	cardNumber = 6;
-
 }
 
 void CardSix::ReadCardParameters(Grid* pGrid)
@@ -15,16 +14,13 @@ void CardSix::ReadCardParameters(Grid* pGrid)
 	pOut->PrintMessage("click on the cell to go to a specific cell");
 	SpecificCell = pIn->GetCellClicked();
 	pOut->ClearStatusBar();
-
 }
-void CardSix::load(ifstream& Infile)
+void CardSix::Load(ifstream& Infile)
 {
-
-	{
-		Infile >> cardNumber;
-
-	}
-
+	Card::Load(Infile);
+	int specificCellNumber;
+	Infile >> specificCellNumber;
+	SpecificCell = CellPosition(specificCellNumber);
 }
 void CardSix::Apply(Grid* pGrid, Player* pPlayer)
 {
@@ -35,14 +31,10 @@ void CardSix::Apply(Grid* pGrid, Player* pPlayer)
 	{
 		pPlayer->GetCell()->GetGameObject()->Apply(pGrid, pPlayer);
 	}
-
 }
-
-
 
 void CardSix::Save(ofstream& OutFile)
 {
-
 	Card::Save(OutFile);
 
 	OutFile << endl;
@@ -50,5 +42,4 @@ void CardSix::Save(ofstream& OutFile)
 
 CardSix::~CardSix()
 {
-
 }

@@ -2,7 +2,6 @@
 
 #include "Card.h"
 
-
 class CardThree : public Card
 {
 private:
@@ -14,8 +13,7 @@ public:
 
 	virtual void Apply(Grid* pGrid, Player* pPlayer);
 
+	virtual void Load(ifstream& Infile);
+
 	virtual ~CardThree();
 };
-
-
-

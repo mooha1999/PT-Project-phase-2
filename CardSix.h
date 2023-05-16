@@ -15,9 +15,6 @@ public:
 	void Apply(Grid* pGrid, Player* pPlayer);
 
 	virtual void Save(ofstream& OutFile);
-	virtual void load(ifstream& Infile);
+	virtual void Load(ifstream& Infile);
 	~CardSix();
-
-
 };
-

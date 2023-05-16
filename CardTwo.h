@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include "Grid.h"
 #include "Cell.h"
 #include "Card.h"
@@ -12,7 +11,6 @@ private:
 public:
 	CardTwo(const CellPosition& pos);
 	virtual void Apply(Grid* pGrid, Player* pPlayer);
+	virtual void Load(ifstream& Infile);
 	virtual ~CardTwo();
-
 };
-

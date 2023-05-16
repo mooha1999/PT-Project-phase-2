@@ -7,12 +7,9 @@ CardThree::CardThree(const CellPosition& pos) :Card(pos)
 	cardNumber = 3;
 }
 
-
 void CardThree::ReadCardParameters(Grid* pGrid)
 {
-
 }
-
 
 void CardThree::Apply(Grid* pGrid, Player* pPlayer)
 {
@@ -23,8 +20,11 @@ void CardThree::Apply(Grid* pGrid, Player* pPlayer)
 	pGrid->PrintErrorMessage("You got an extra roll, click to continue ...");
 }
 
+void CardThree::Load(ifstream& Infile)
+{
+	Card::Load(Infile);
+}
 
 CardThree::~CardThree()
 {
 }
-

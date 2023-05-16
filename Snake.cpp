@@ -54,6 +54,10 @@ void snake::Save(ofstream& OutFile)
 
 void snake::Load(ifstream& Infile)
 {
+	int start, end;
+	Infile >> start >> end;
+	position = CellPosition(start);
+	endCellPos = CellPosition(end);
 }
 
 snake::~snake()
