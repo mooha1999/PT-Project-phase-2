@@ -73,7 +73,40 @@ void AddLadderAction::ReadActionParameters()
 		flag = 1;
 		return;
 	}
-
+	if (pGrid->GetCellFromPosition(endPos)->HasSnake() || pGrid->GetCellFromPosition(endPos)->HasLadder()) {
+		pOut->PrintMessage("End cell cannot has a snake or a ladder");
+		flag = 1;
+		return;
+	}
+	int testVEndPosition;
+	CellPosition testCellPosition = NULL;
+	Cell* testCell = nullptr;
+	GameObject* testGObject = nullptr;
+	bool overLapped = false;
+	// No overlap between ladders and snakes, End cell cannot be start of new ladder or snake
+	for (int i = NumVerticalCells - 1; i >= 0; i--)
+	{
+		testCellPosition.SetHCell(startPos.HCell());
+		testCellPosition.SetVCell(i);
+		testCell = pGrid->GetCellFromPosition(testCellPosition);
+		if (testCell->HasLadder()) {
+			testGObject = testCell->GetGameObject();
+			testVEndPosition = ((Ladder*)testGObject)->GetEndPosition().VCell();
+			for (int j = endPos.VCell(); j <= startPos.VCell(); j++)
+			{
+				if (j >= testVEndPosition && j <= i) {
+					overLapped = true;
+					break;
+				}
+			}
+			i = testVEndPosition;
+		}
+	}
+	if (overLapped) {
+		pOut->PrintMessage("Two ladders cannot overlap (click to continue...)");
+		flag = 1;
+		return;
+	}
 	//TODO Validate overlapping
 	/*GameObject* Lad = new Ladder(startPos, endPos);
 	if (Lad->IsOverlapping(Lad))

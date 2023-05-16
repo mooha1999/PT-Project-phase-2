@@ -11,7 +11,6 @@ AddSnakeAction::AddSnakeAction(ApplicationManager* pApp) : Action(pApp)
 
 AddSnakeAction::~AddSnakeAction()
 {
-
 }
 
 void AddSnakeAction::ReadActionParameters()
@@ -44,19 +43,52 @@ void AddSnakeAction::ReadActionParameters()
 		flag = 1;
 		return;
 	}
-	else if (startPos.HCell() != endPos.HCell())
+	if (startPos.HCell() != endPos.HCell())
 	{
 		pGrid->PrintErrorMessage("end cell and start cell are not in the same column");
 		flag = 1;
 		return;
 	}
-	else if (endPos.VCell() == 0)
+	if (endPos.VCell() == 0)
 	{
 		pGrid->PrintErrorMessage("End cell cannot be a start of another ladder or snake");
 		flag = 1;
 		return;
 	}
-
+	if (pGrid->GetCellFromPosition(endPos)->HasSnake() || pGrid->GetCellFromPosition(endPos)->HasLadder()) {
+		pOut->PrintMessage("End cell cannot has a snake or a ladder");
+		flag = 1;
+		return;
+	}
+	int testVEndPosition;
+	CellPosition testCellPosition = NULL;
+	Cell* testCell = nullptr;
+	GameObject* testGObject = nullptr;
+	bool overLapped = false;
+	// No overlap between ladders and snakes, End cell cannot be start of new ladder or snake
+	for (int i = NumVerticalCells - 1; i >= 0; i--)
+	{
+		testCellPosition.SetHCell(startPos.HCell());
+		testCellPosition.SetVCell(i);
+		testCell = pGrid->GetCellFromPosition(testCellPosition);
+		if (testCell->HasLadder()) {
+			testGObject = testCell->GetGameObject();
+			testVEndPosition = ((snake*)testGObject)->GetEndPosition().VCell();
+			for (int j = endPos.VCell(); j <= startPos.VCell(); j++)
+			{
+				if (j >= testVEndPosition && j <= i) {
+					overLapped = true;
+					break;
+				}
+			}
+			i = testVEndPosition;
+		}
+	}
+	if (overLapped) {
+		pOut->PrintMessage("Two ladders cannot overlap (click to continue...)");
+		flag = 1;
+		return;
+	}
 	/*GameObject* S = new Snake(startPos, endPos);
 	if (S->IsOverLapping(S))
 	{
@@ -67,8 +99,6 @@ void AddSnakeAction::ReadActionParameters()
 
 	pOut->ClearStatusBar();
 }
-
-
 
 void AddSnakeAction::Execute()
 {
