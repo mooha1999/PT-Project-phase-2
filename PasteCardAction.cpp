@@ -12,16 +12,12 @@
 #include "CardSix.h"
 #include "CardSeven.h"
 
-
-
 PasteCardAction::PasteCardAction(ApplicationManager* pApp) :Action(pApp)
 {
-
 }
 
 void PasteCardAction::ReadActionParameters()
 {
-
 }
 
 void PasteCardAction::Execute()
@@ -38,8 +34,7 @@ void PasteCardAction::Execute()
 
 	if (pCard)
 	{
-
-		//gets the card number from the user 
+		//gets the card number from the user
 
 		int cardNumber = pCard->GetCardNumber();
 
@@ -51,6 +46,7 @@ void PasteCardAction::Execute()
 		{
 		case 1:
 			pCard = new CardOne(*Position);
+			pCard->ReadCardParameters(pGrid);
 			break;
 
 			// A- Add the remaining cases
@@ -73,6 +69,7 @@ void PasteCardAction::Execute()
 
 		case 6:
 			pCard = new CardSix(*Position);
+			pCard->ReadCardParameters(pGrid);
 			break;
 
 		case 7:
@@ -107,5 +104,4 @@ void PasteCardAction::Execute()
 
 PasteCardAction::~PasteCardAction()
 {
-
 }
